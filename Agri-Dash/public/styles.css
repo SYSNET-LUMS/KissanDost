@@ -1,0 +1,187 @@
+@font-face {
+  font-family: 'Nastaliq';
+  src: url('/fonts/JameelNooriNastaleeqRegular.ttf') format('truetype');
+}
+
+body {
+  font-family: 'Nastaliq', Arial, sans-serif;
+  direction: rtl;
+  text-align: right;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  text-align: center;
+  max-width: 800px; /* Slightly reduced max width to fit two cards per row */
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px; /* Add space between rows and columns */
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Individual icons for each card */
+.ph {
+  background-image: url('/icons/ph.png'); /* Replace with your actual pH icon */
+}
+
+.nitrogen {
+  background-image: url('/icons/nitrogen.png'); /* Replace with your nitrogen icon */
+}
+
+.phosphorus {
+  background-image: url('/icons/phosphorus.png'); /* Replace with your phosphorus icon */
+}
+
+.potassium {
+  background-image: url('/icons/potassium.png'); /* Replace with your potassium icon */
+}
+
+.temperature {
+  background-image: url('/icons/temperature.png'); /* Replace with your temperature icon */
+}
+
+.moisture {
+  background-image: url('/icons/moisture.png'); /* Replace with your moisture icon */
+}
+
+.conductivity {
+  background-image: url('/icons/conductivity.png'); /* Replace with your conductivity icon */
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+span {
+  font-weight: bold;
+  color: #0077b6;
+}
+
+.reading-time {
+  direction: ltr;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #555; /* Slightly muted color */
+  text-align: center; /* Center alignment */
+  font-weight: bold;
+}
+
+
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+    gap: 20px; /* Increase gap for better spacing */
+    padding: 0 10px; /* Add horizontal padding for the grid */
+  }
+
+  .card {
+    max-width: 95%;
+    padding: clamp(20px, 4vw, 30px);
+    border-radius: 10px; /* Ensure rounded corners for consistency */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for better focus */
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 15px; /* Add spacing below the heading */
+    text-align: center; /* Ensure proper alignment */
+  }
+
+  h3 {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    margin: 10px 0; /* Add spacing around subheadings */
+  }
+
+  p {
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    margin: 10px 0;
+    line-height: 1.5; /* Improve readability by increasing line height */
+  }
+
+  .icon {
+    width: clamp(45px, 6vw, 60px);
+    height: clamp(45px, 6vw, 60px);
+    margin-bottom: 10px; /* Add spacing below icons */
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; /* Adjust gap for tighter layout */
+    padding: 0 5px; /* Reduce padding for compact screens */
+  }
+
+  .card {
+    max-width: 98%;
+    padding: clamp(15px, 4vw, 25px);
+    border-radius: 8px; /* Slightly smaller rounding for smaller screens */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2rem);
+    margin-bottom: 10px;
+    text-align: center; /* Maintain center alignment */
+  }
+
+  h3 {
+    font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+    margin: 8px 0;
+  }
+
+  p {
+    font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+    margin: 5px 0; /* Compact spacing for small screens */
+    line-height: 1.4; /* Adjust line height for smaller text */
+  }
+
+  .icon {
+    width: clamp(35px, 5vw, 50px);
+    height: clamp(35px, 5vw, 50px);
+    margin-bottom: 8px; /* Adjust spacing below icons */
+  }
+}

@@ -1,0 +1,118 @@
+<!-- <!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سینسر ڈیش بورڈ</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/refresh.js"></script> 
+</head>
+<body>
+  <div class="container">
+    <h1>سینسر ڈیش بورڈ</h1>
+
+    <p id="reading-time" class="reading-time">N/A</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon ph"></div>
+        <h3>پی ایچ</h3>
+        <p><span id="ph">N/A</span></p>
+      </div>
+      <div class="card">
+        <div class="icon nitrogen"></div>
+        <h3>نائٹروجن</h3>
+        <p><span id="nitrogen">N/A</span> ملی گرام/کلوگرام</p>
+      </div>
+      <div class="card">
+        <div class="icon phosphorus"></div>
+        <h3>فاسفورس</h3>
+        <p><span id="phosphorus">N/A</span> ملی گرام/کلوگرام</p>
+      </div>
+      <div class="card">
+        <div class="icon potassium"></div>
+        <h3>پوٹاشیم</h3>
+        <p><span id="potassium">N/A</span> ملی گرام/کلوگرام</p>
+      </div>
+      <div class="card">
+        <div class="icon temperature"></div>
+        <h3>درجہ حرارت</h3>
+        <p><span id="temperature">N/A</span> ℃</p>
+      </div>
+      <div class="card">
+        <div class="icon moisture"></div>
+        <h3>نمی</h3>
+        <p><span id="moisture">N/A</span> %</p>
+      </div>
+      <div class="card">
+        <div class="icon conductivity"></div>
+        <h3>برقی ترسیلیت</h3>
+        <p><span id="conductivity">N/A</span> µs/cm</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سینسر ڈیش بورڈ</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/refresh.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+</head>
+<body>
+  <div class="container">
+    <h1>سینسر ڈیش بورڈ</h1>
+
+    <p id="reading-time" class="reading-time">N/A</p>
+
+    <!-- Value Cards -->
+    <div class="grid">
+      <div class="card" data-type="pH">
+        <div class="icon ph"></div>
+        <h3>پی ایچ</h3>
+        <p><span id="pH">N/A</span></p>
+      </div>
+      <div class="card" data-type="nitrogen">
+        <div class="icon nitrogen"></div>
+        <h3>نائٹروجن</h3>
+        <p><span id="nitrogen">N/A</span> ملی گرام/کلوگرام</p>
+      </div>
+      <div class="card" data-type="phosphorus">
+        <div class="icon phosphorus"></div>
+        <h3>فاسفورس</h3>
+        <p><span id="phosphorus">N/A</span> ملی گرام/کلوگرام</p>
+      </div>
+      <div class="card" data-type="potassium">
+        <div class="icon potassium"></div>
+        <h3>پوٹاشیم</h3>
+        <p><span id="potassium">N/A</span> ملی گرام/کلوگرام</p>
+      </div>
+      <div class="card" data-type="temperature">
+        <div class="icon temperature"></div>
+        <h3>درجہ حرارت</h3>
+        <p><span id="temperature">N/A</span> ℃</p>
+      </div>
+      <div class="card" data-type="moisture">
+        <div class="icon moisture"></div>
+        <h3>نمی</h3>
+        <p><span id="moisture">N/A</span> %</p>
+      </div>
+      <div class="card" data-type="conductivity">
+        <div class="icon conductivity"></div>
+        <h3>برقی ترسیلیت</h3>
+        <p><span id="conductivity">N/A</span> µs/cm</p>
+      </div>
+    </div>
+
+    <!-- Graph Container -->
+    <div id="graph-container" style="display: none; margin-top: 20px;">
+      <canvas id="reading-graph"></canvas>
+    </div>
+  </div>
+</body>
+</html>
