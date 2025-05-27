@@ -1,0 +1,16 @@
+chromadb==0.4.24
+pandas
+numpy
+openai
+python-dotenv
+alembic
+sqlalchemy
+sqlalchemy-utils
+psycopg2
+PyPDF2
+pyTelegramBotAPI
+schedule
+requests
+beautifulsoup4
+llama-index
+pydub
