@@ -4,7 +4,7 @@
 
 ---
 
-## 📌 Key Highlights
+## Key Highlights
 
 - **Multilingual** chatbot interface (Urdu, Punjabi, Sindhi) for farmers
 - **Voice + Text** over WhatsApp using OpenAI Assistants API
@@ -15,7 +15,7 @@
 
 ---
 
-## 🔬 Research Motivation
+## Research Motivation
 
 Despite IoT’s potential in agriculture, adoption in developing regions is hindered by:
 
@@ -27,7 +27,7 @@ Kissan-Dost addresses this gap by localizing **LLM-powered agriculture advisory*
 
 ---
 
-## 🧠 System Architecture
+## System Architecture
 
 ![System Architecture](images/KissanDost_Arch.png)
 
@@ -41,7 +41,7 @@ Kissan-Dost is composed of:
 
 ---
 
-## 🛠️ Hardware Deployment
+## Hardware Deployment
 
 ![Sensor Module](images/sensor_module.png)
 
@@ -63,7 +63,7 @@ These modules were deployed on two test sites (sugarcane and spinach farms), eac
 
 ---
 
-## 🔁 User Interaction & Data Flow
+## User Interaction & Data Flow
 
 ![Flow Diagram](images/flow_diagram.png)
 
@@ -77,12 +77,12 @@ The system follows a dual-pipeline:
 
 ---
 
-## 💬 Interaction Examples: Chat + Dashboard
+## Interaction Examples: Chat + Dashboard
 
-Kissan-Dost offers two primary interfaces which were evaluated in separate phases:
+Kissan-Dost offers two primary interfaces, which were evaluated in separate phases:
 
-- The **WhatsApp** based chatbot using voice/text in their local language
 - The ability to monitor field data via a live **web dashboard**
+- The **WhatsApp** based chatbot using voice/text in their local languages
 
 <div align="center">
 
@@ -92,33 +92,24 @@ Kissan-Dost offers two primary interfaces which were evaluated in separate phase
 
 </div>
 
-- The **chatbot** supports queries like:
-  > "کیا مجھے فصل کے لئے کھاد ڈالنی چاہیے؟"
+## Research Contributions
 
-- The **dashboard** refreshes every 30 minutes and shows:
-  - Soil pH, moisture, NPK trends
-  - Sensor battery levels
-  - Urdu-labeled sensor cards
-
-## 📈 Research Contributions
-
-- **IoT-to-Chatbot Integration**: Real-time sensor fusion in LLM powered chat responses
-- **Cultural Localization**: Voice, script and advice personalized to region and crop
-- **Rigorous Technical Evaluation**:
-  - **LLM-as-a-Judge** for response quality
-  - **RAGAS** for RAG evaluation
-  - **COMETKiwi and Googles MetricX-24** for translation quality
+- **IoT-Integrated Conversational AI**: Seamless fusion of real-time soil sensor data with LLM responses via a multilingual WhatsApp interface.
+- **Culturally Grounded Design**: End-to-end localization in voice, script and agricultural content across Urdu, Punjabi, and Sindhi.
+- **Systematic Technical Evaluation**:
+  - **LLM-as-a-Judge** for assessing response accuracy and helpfulness
+  - **RAGAS** to measure factuality and relevance in retrieval-augmented responses
+  - **COMETKiwi** and **MetricX-24** for reference-free evaluation of translation fidelity
 
 ---
 
-## 🧪 Field Deployment Outcomes
+## Field Deployment Outcomes
 
 - **Duration**: Two deployments × 45 days (Sugarcane + Spinach)
 - **Sites**: 1 commercial farm, 1 university farm
 - **Participants**: 5 farmers (managers + field workers)
-- **Findings**:
-  - Traditional dashboards had low engagement
-  - WhatsApp chatbot increased trust, accessibility and decision-making
-  - Farmers responded positively to chatbot alerts, warnings and advice
 
----
+### Key Findings
+- **Limited dashboard adoption**: Farmers exhibited minimal engagement with visual dashboards due to literacy and usability barriers.
+- **High chatbot utility**: The WhatsApp-based interface enabled consistent and trusted interaction, particularly through voice.
+- **Increased trust and uptake**: Repeated accurate advisories led to growing reliance on the system for daily decision-making.
