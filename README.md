@@ -61,12 +61,6 @@ The IoT hardware stack includes:
 
 These modules were deployed on two test sites (sugarcane and spinach farms), each with an independent sensing + connectivity pipeline.
 
-## 💬 Conversational Interaction
-
-![WhatsApp Chat](images/whatsapp_example.png)
-
-The system detects intent, retrieves relevant sensor and contextual data and delivers **voice or text-based advice** accordingly.
-
 ---
 
 ## 🔁 User Interaction & Data Flow
@@ -83,13 +77,28 @@ The system follows a dual-pipeline:
 
 ---
 
-## 📊 Dashboard
+## 💬 Interaction Examples: Chat + Dashboard
 
-![Sensor Dashboard](images/dash-graph.png)
+Kissan-Dost offers two primary interfaces which were evaluated in separate phases:
 
-In addition to chatbot interactions, a live web-based dashboard displays real-time sensor trends.
+- The **WhatsApp** based chatbot using voice/text in their local language
+- The ability to monitor field data via a live **web dashboard**
 
----
+<div align="center">
+
+<img src="images/dash-graph.png" alt="Sensor Dashboard" width="45%"/>
+<img src="images/whatsapp_example.png" alt="WhatsApp Chat" width="45%" style="margin-left: 20px;"/>
+
+
+</div>
+
+- The **chatbot** supports queries like:
+  > "کیا مجھے فصل کے لئے کھاد ڈالنی چاہیے؟"
+
+- The **dashboard** refreshes every 30 minutes and shows:
+  - Soil pH, moisture, NPK trends
+  - Sensor battery levels
+  - Urdu-labeled sensor cards
 
 ## 📈 Research Contributions
 
