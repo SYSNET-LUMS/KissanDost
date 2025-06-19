@@ -113,3 +113,341 @@ Kissan-Dost offers two primary interfaces, which were evaluated in separate phas
 - **Limited dashboard adoption**: Farmers exhibited minimal engagement with visual dashboards due to literacy and usability barriers.
 - **High chatbot utility**: The WhatsApp-based interface enabled consistent and trusted interaction, particularly through voice.
 - **Increased trust and uptake**: Repeated accurate advisories led to growing reliance on the system for daily decision-making.
+
+---
+
+## 🔧 Module 1: `main_server` — Core Backend for Advisory Orchestration
+
+This module serves as the **central brain** of the Kissan-Dost system. Implemented in FastAPI, it integrates real-time sensor data, weather information, market prices, and policy documents to generate multilingual agricultural advice using OpenAI’s GPT-4o and Retrieval-Augmented Generation (RAG) pipelines.
+
+---
+
+### Setup Instructions
+
+#### 1️⃣ Environment Requirements
+
+Ensure the following are installed:
+
+- Python 3.9+
+- PostgreSQL (recommended version 12+)
+- FFmpeg (`ffmpeg` command must be globally available)
+- OpenAI and [WeatherAPI]((https://www.weatherapi.com/)) credentials
+
+Install Python dependencies:
+
+```bash
+cd main_server
+pip install -r requirements.txt
+```
+
+---
+
+#### 2️⃣ Environment Configuration
+
+Create a `.env` file in `main_server/` with the following content:
+
+```env
+# PostgreSQL Configuration
+DB_TYPE=postgresql
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=kissanDost
+
+# OpenAI API
+OPENAI_API_KEY=your_openai_key
+
+# Weather API
+WEATHER_API_KEY=your_weatherapi_key
+
+# WhatsApp Cloud API (optional)
+WHATSAPP_BEARER=your_whatsapp_token
+```
+
+As the system response is generated independent of WhatsApp, it is not required to run the server. The WhatsApp business API serves only as a message delivery system. You will have to refer to the WhatsApp docs via [Meta's WhatsApp Cloud API](https://developers.facebook.com/docs/whatsapp) for setup.
+
+---
+
+### 🗃️ Database Initialization & Sample Data
+
+#### 3️⃣ Create All Tables
+
+```bash
+python -c "import db_schema"
+```
+
+Creates the following tables:
+- `users`
+- `readings`
+- `messages`
+- `messages_with_translation`
+- `app_usage`
+
+#### 4️⃣ Load Sample Sensor Data
+
+Use the provided `readings.csv` and run the following:
+
+```python
+import pandas as pd
+from db_controllers import addReadingRecord
+
+df = pd.read_csv("readings.csv")
+for _, row in df.iterrows():
+    addReadingRecord(
+        row['pH'], row['nitrogen'], row['phosphorus'], row['potassium'],
+        row['temperature'], row['moisture'], row['conductivity'], row['battery'], row['user_id']
+    )
+```
+
+> Ensure `user_id` values correspond to actual users in the DB. Create test users using `addUser()` if needed.
+
+---
+
+### Document Indexing (RAG)
+
+#### 5️⃣ Add PDFs for Crop Advisories
+
+PDFs used by us have been provided in the `data/` folder.
+
+#### 6️⃣ Build Vector Indexes
+
+Run:
+
+```bash
+python index_builder.py
+```
+
+> Indexes are later used by GPT-4o to inject factual, policy-grounded information into chatbot responses.
+
+---
+
+### Market Price Scraping (Optional)
+
+#### 7️⃣ Run Crop Market Scraper
+
+```bash
+python market_scraper.py
+```
+
+Generates: `cities_crop_prices.json`  
+Includes min/max/FQP pricing for key crops across Pakistani cities from [AMIS Pakistan](http://amis.pk).
+
+---
+
+### ▶️ Run the FastAPI Server (locally)
+
+#### 8️⃣ Start the Server
+
+```bash
+uvicorn main:app --reload
+```
+
+Accessible at:
+
+- API: `http://127.0.0.1:8000`
+- Swagger UI: `http://127.0.0.1:8000/docs`
+
+---
+
+### 📡 Key API Endpoints
+
+| Method | Endpoint                     | Function                                   |
+|--------|------------------------------|--------------------------------------------|
+| `GET`  | `/`                          | Health check                               |
+| `POST` | `/transcribeAudio`          | Converts MP3 audio to text via Whisper     |
+| `GET`  | `/translatedResponseUser`   | Main pipeline for generating advice        |
+| `GET`  | `/getAudioResponse?text=...`| Text-to-speech audio in `.ogg` format      |
+| `POST` | `/addReadingRecord`         | Submit sensor data for a specific user     |
+
+---
+
+> 🧠 This module enables **data-driven, context-aware agricultural advisory** by unifying IoT, NLP, weather, market intelligence, and voice feedback into one streamlined API service.
+
+---
+
+## 🔁 Module 2: `daily_updates` — Scheduled Crop Advisories
+
+This component is a lightweight **Node.js/Express-based cron scheduler** that automates daily delivery of personalized agricultural updates to farmers via WhatsApp. It is designed to run independently alongside the FastAPI backend and interfaces directly with the same PostgreSQL database.
+
+---
+
+### Setup Instructions
+
+#### 1️⃣ Install Node Dependencies
+
+```bash
+cd daily_updates
+npm install
+```
+
+#### 2️⃣ Create Environment Configuration
+
+Create a `.env` file in the `daily_updates/` directory:
+
+```env
+# PostgreSQL Database (Same as main_server)
+DB_NAME=kissanDost
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_HOST=localhost
+DB_PORT=5432
+DB_TYPE=postgres
+
+# OpenAI API
+OPENAI_API_KEY=your_openai_key
+
+# WhatsApp Cloud API
+WHATSAPP_BEARER=your_whatsapp_token
+```
+
+---
+
+### How It Works
+
+At **midnight every day**, the module:
+
+1. Fetches all users and their preferred `update_time` values.
+2. Reschedules dynamic cron jobs for each user using `node-cron`.
+3. At the assigned time:
+   - Retrieves sensor data from the `readings` table.
+   - Generates GPT-4o-based summary using OpenAI.
+   - Translates and formats the message.
+   - Sends it via the WhatsApp API.
+   - Logs the message to the database (`messages` table).
+
+---
+
+### ▶️ Run the Server
+
+```bash
+node index.js
+```
+
+Server will run locally at:
+
+```
+http://localhost:3000
+```
+
+Logs will indicate scheduling, message generation, and dispatch status.
+
+> ✅ Ensure that the PostgreSQL database used by `main_server` is live and accessible.
+
+---
+
+### Mapping Phone Numbers
+
+To test sending messages, update the `phone_numbers` array in `index.js`:
+
+```js
+let phone_numbers = [
+  '923xxxxxxxx1',
+  '923xxxxxxxx2',
+  ...
+];
+```
+
+> 🔒 Indexing is based on `user_id - 1`. Confirm the ordering matches actual user IDs.
+
+You must pre-register these numbers with WhatsApp via their developer dashboard to send messages.
+
+---
+
+### 📂 Folder Structure
+
+```bash
+daily_updates/
+├── db.js                # Sequelize DB connection
+├── db_controller.js     # Sensor + user data queries
+├── db_schema.js         # Sequelize model definitions
+├── helpers.js           # GPT logic and WhatsApp integration
+├── daily_updates.js     # Advisory message builder
+├── index.js             # Express server and scheduler
+└── .env                 # Environment configuration
+```
+
+---
+
+> 🧠 This module ensures **timely, automated, and hyper-personalized advice delivery**, reducing farmer burden and increasing daily engagement with the system.
+
+---
+
+---
+
+## Module 3: `Agri-Dash` — Real-Time IoT Monitoring Dashboard
+
+This module implements a web-based dashboard using **Express.js + EJS** to render real-time visualizations of field sensor data.
+
+---
+
+### Setup Instructions
+
+#### 1️⃣ Install Node Dependencies
+
+```bash
+cd agri-dash
+npm install
+```
+
+#### 2️⃣ Environment Configuration
+
+Create a `.env` file in `agri-dash/` with your database credentials:
+
+```env
+DB_NAME=kissanDost
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+> ☑️ This DB must already be initialized by the `main_server` setup.
+
+---
+
+### ▶️ Run the Dashboard Server
+
+```bash
+node server.js
+```
+
+Open your browser at:
+
+```
+http://localhost:3000
+```
+
+You should see the live Urdu dashboard with sensor summaries and graph overlays.
+
+---
+
+### 📂 Project Structure
+
+```bash
+agri-dash/
+├── server.js           # Express + EJS backend
+├── db.js               # PostgreSQL connector
+├── db_controller.js    # Sensor query logic
+├── refresh.js          # JS for graph updates (AJAX polling)
+├── index.ejs           # Main Urdu dashboard template
+├── styles.css          # Dashboard styles
+├── dash-graph.png      # Screenshot for documentation
+└── .env                # Environment variables
+```
+
+---
+
+### 🔍 Route Summary
+
+| Method | Path     | Description             |
+|--------|----------|-------------------------|
+| `GET`  | `/`      | Live Urdu sensor dashboard |
+
+---
+
+### 📌 Usage Notes
+
+- Sensor values are pulled from the `readings` table using `getLatestReadingByUserID()`.
+- Graphs refresh every **30 minutes** using front-end polling.
+- Users can click on metrics to visualize historical data trends.
