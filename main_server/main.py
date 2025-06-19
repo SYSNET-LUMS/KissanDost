@@ -18,6 +18,7 @@ import subprocess
 load_dotenv()
 
 API_KEY = os.getenv("OPENAI_API_KEY")
+WHATSAPP_API_KEY = os.getenv("WHATSAPP_API_KEY")
 
 
 from rag import agent
@@ -294,7 +295,7 @@ async def generate_tts_audio(text:str):
             }
 
             headers = {
-                'Authorization': f'Bearer EAAGI94sqL8oBOZBp1yIJav1h1OCz5ZBXeDuLOyAzREBKq5ZCudKZC7z5BOjKzvLlPK4ALBVbmnoCcZCkan6T6dlLPfOI9wvswWTXCf9jWyais3oWRhLRt4Sa26KavTdYw4nurzcQ8wmxak4MxwtFZAY8fONzP3gehh1NZCsYzCRPcVZC3lZCL5qVSuWEu'
+                'Authorization': WHATSAPP_API_KEY
             }
             print(f"File size: {os.path.getsize(temp_ogg_file.name)} bytes")
             print(f"Content type: {files['type'][1]}") 

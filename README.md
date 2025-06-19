@@ -29,7 +29,7 @@ Kissan-Dost addresses this gap by localizing **LLM-powered agriculture advisory*
 
 ## 🧠 System Architecture
 
-![System Architecture](KissanDost_Arch.png)
+![System Architecture](images/KissanDost_Arch.png)
 
 Kissan-Dost is composed of:
 
@@ -43,29 +43,35 @@ Kissan-Dost is composed of:
 
 ## 🛠️ Hardware Deployment
 
-![Sensor Module](sensor_module.png)
+![Sensor Module](images/sensor_module.png)
 
-![Farm Deployments](Farms.png)
+![Farm Deployments](images/Farms.png)
 
 The IoT hardware stack includes:
 
-- ESP32-powered sensor module with **7-in-1 RS485 suite**
-- Field-deployable, waterproof enclosures (IP65)
-- Deployed across **2 farms**: sugarcane and spinach plots, with real field feedback
+- ESP32-powered sensor module with a **7-in-1 RS485 sensor suite** (pH, EC, NPK, Temp, Moisture)
+- Custom-designed PCB with:
+  - TTL converter for RS485
+  - Buck converter for regulated 5V output
+  - 12V rechargeable battery
+- **Sleep-mode logic** for low power operation
+- Field-ready **IP65 enclosures** with mounts for crop-level deployment
 
----
+> 📁 Arduino source code and circuit diagrams are included in [`arduino_scripts/`](./arduino_scripts/) for replication or extension.
+
+These modules were deployed on two test sites (sugarcane and spinach farms), each with an independent sensing + connectivity pipeline.
 
 ## 💬 Conversational Interaction
 
-![WhatsApp Chat](whatsapp_example1.png)
+![WhatsApp Chat](images/whatsapp_example.png)
 
-The system detects intent, retrieves relevant sensor and contextual data, and delivers **voice or text-based advice** accordingly.
+The system detects intent, retrieves relevant sensor and contextual data and delivers **voice or text-based advice** accordingly.
 
 ---
 
 ## 🔁 User Interaction & Data Flow
 
-![Flow Diagram](flow_diagram.png)
+![Flow Diagram](images/flow_diagram.png)
 
 The system follows a dual-pipeline:
 
@@ -79,7 +85,7 @@ The system follows a dual-pipeline:
 
 ## 📊 Dashboard
 
-![Sensor Dashboard](dash-graph.png)
+![Sensor Dashboard](images/dash-graph.png)
 
 In addition to chatbot interactions, a live web-based dashboard displays real-time sensor trends.
 
@@ -87,7 +93,7 @@ In addition to chatbot interactions, a live web-based dashboard displays real-ti
 
 ## 📈 Research Contributions
 
-- **IoT-to-Chatbot Integration**: Real-time sensor fusion in chat responses
+- **IoT-to-Chatbot Integration**: Real-time sensor fusion in LLM powered chat responses
 - **Cultural Localization**: Voice, script and advice personalized to region and crop
 - **Rigorous Technical Evaluation**:
   - **LLM-as-a-Judge** for response quality

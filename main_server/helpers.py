@@ -12,15 +12,12 @@ load_dotenv()
 
 
 API_KEY = os.getenv("OPENAI_API_KEY")
+WHATSAPP_API_KEY = os.getenv("WHATSAPP_API_KEY")
 
 
 client = OpenAI(
    api_key = API_KEY
 )
-  
-
-# query= "I am seeking expert guidance on effective strategies to protect my cotton plants from insect infestations. Please provide a detailed plan that includes the most appropriate pest control methods for my region, considering the current environmental conditions and pest trends. I am also interested in understanding the best practices for implementing these methods in a sustainable manner that minimizes harm to the environment and maintains the health of the cotton plants."
-# print(getRagResponse(query))
 
 def generate_advice(age, gender, socioeconomic_background, farm_details):
 
@@ -43,34 +40,11 @@ print(assistant.id)
 thread = client.beta.threads.create()
 print(thread.id)
 
-# print(assistant.id)
-# message = client.beta.threads.messages.create(
-#   thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
-#   role="user",
-#   content="What is the best crop to grow in Lahore?"
-# )
-
-# run = client.beta.threads.runs.create_and_poll(
-#   thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
-#   assistant_id="asst_JBdOZ0ojTdrWTXwYU1hfI0hO",
-#   instructions="Please address the user as Saad. The user has a premium account."
-# )
-
-# if run.status == 'completed': 
-#   messages = client.beta.threads.messages.list(
-#     thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw"
-#   )
-#   print((messages.data[0].content[0].text.value))
-#   # print(messages)
-
-# else:
-#   print(run.status)
-
 import requests
 def sendWhatsappMessage(phone_number, message):
    url = 'https://graph.facebook.com/v20.0/304854782718986/messages'
    headers = {
-      'Authorization': 'Bearer EAAGI94sqL8oBOZBp1yIJav1h1OCz5ZBXeDuLOyAzREBKq5ZCudKZC7z5BOjKzvLlPK4ALBVbmnoCcZCkan6T6dlLPfOI9wvswWTXCf9jWyais3oWRhLRt4Sa26KavTdYw4nurzcQ8wmxak4MxwtFZAY8fONzP3gehh1NZCsYzCRPcVZC3lZCL5qVSuWEu', 
+      'Authorization': WHATSAPP_API_KEY, 
       'Content-Type': 'application/json'
    }
    data = {
@@ -137,7 +111,7 @@ def generate_tts_audio(text):
                 'messaging_product': (None, 'whatsapp')
             }
             headers = {
-                'Authorization': f'Bearer EAAGI94sqL8oBOZBp1yIJav1h1OCz5ZBXeDuLOyAzREBKq5ZCudKZC7z5BOjKzvLlPK4ALBVbmnoCcZCkan6T6dlLPfOI9wvswWTXCf9jWyais3oWRhLRt4Sa26KavTdYw4nurzcQ8wmxak4MxwtFZAY8fONzP3gehh1NZCsYzCRPcVZC3lZCL5qVSuWEu'
+                'Authorization': WHATSAPP_API_KEY,
             }
             print(f"File size: {os.path.getsize(temp_ogg_file.name)} bytes")
             print(f"Content type: {files['type'][1]}") 
