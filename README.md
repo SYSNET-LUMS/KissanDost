@@ -169,7 +169,7 @@ As the system response is generated independent of WhatsApp, it is not required 
 
 ---
 
-### 🗃️ Database Initialization & Sample Data
+### Database Initialization & Sample Data
 
 #### 3️⃣ Create All Tables
 
@@ -222,7 +222,7 @@ python index_builder.py
 
 ---
 
-### Market Price Scraping (Optional)
+### Market Price Scraping
 
 #### 7️⃣ Run Crop Market Scraper
 
@@ -262,7 +262,7 @@ Accessible at:
 
 ---
 
-> 🧠 This module enables **data-driven, context-aware agricultural advisory** by unifying IoT, NLP, weather, market intelligence, and voice feedback into one streamlined API service.
+> This module enables **data-driven, context-aware agricultural advisory** by unifying IoT, NLP, weather, market intelligence and voice feedback into one streamlined API service.
 
 ---
 
@@ -348,13 +348,13 @@ let phone_numbers = [
 ];
 ```
 
-> 🔒 Indexing is based on `user_id - 1`. Confirm the ordering matches actual user IDs.
+> Indexing is based on `user_id - 1`. Confirm the ordering matches actual user IDs.
 
 You must pre-register these numbers with WhatsApp via their developer dashboard to send messages.
 
 ---
 
-### 📂 Folder Structure
+### Folder Structure
 
 ```bash
 daily_updates/
@@ -369,7 +369,7 @@ daily_updates/
 
 ---
 
-> 🧠 This module ensures **timely, automated, and hyper-personalized advice delivery**, reducing farmer burden and increasing daily engagement with the system.
+> This module ensures **timely, automated and hyper-personalized advice delivery**, reducing farmer burden.
 
 ---
 
@@ -422,7 +422,7 @@ You should see the live Urdu dashboard with sensor summaries and graph overlays.
 
 ---
 
-### 📂 Project Structure
+### Project Structure
 
 ```bash
 agri-dash/
@@ -438,7 +438,7 @@ agri-dash/
 
 ---
 
-### 🔍 Route Summary
+### Route Summary
 
 | Method | Path     | Description             |
 |--------|----------|-------------------------|
@@ -451,3 +451,52 @@ agri-dash/
 - Sensor values are pulled from the `readings` table using `getLatestReadingByUserID()`.
 - Graphs refresh every **30 minutes** using front-end polling.
 - Users can click on metrics to visualize historical data trends.
+
+---
+
+## ☁️ Deployment: Hosting the Full Kissan-Dost Ecosystem via Railway
+
+All three components of the Kissan-Dost system were successfully deployed to the cloud using **[Railway](https://railway.app/)**, a developer-friendly platform for managing backend applications with minimal configuration.
+
+### ✅ Why Railway?
+
+- Simple GitHub integration with auto-deploys
+- Support for both Python (FastAPI) and Node.js environments
+- Built-in PostgreSQL add-on
+- Environment variable management
+- Free tier sufficient for early research and demos
+
+---
+
+### 📦 Deployment Breakdown
+
+| Module        | Runtime | Railway Service Type       | Notes                                           |
+|---------------|---------|----------------------------|--------------------------------------------------|
+| `main_server` | Python  | FastAPI (via Uvicorn)      | Exposed API and RAG engine                      |
+| `daily_updates` | Node.js | Background worker / cron   | Scheduled daily WhatsApp updates                |
+| `agri-dash`   | Node.js | Express web app            | Live dashboard UI in Urdu                       |
+
+---
+
+> 🔗 Refer to the official Railway docs for platform-specific deployment steps: [https://docs.railway.app](https://docs.railway.app)
+
+---
+
+### Environment Notes
+
+All modules used the **same PostgreSQL instance**, with consistent credentials set across `.env` files. Railway's internal networking allows seamless DB access between microservices.
+
+### 🌐 Production URLs
+
+Upon deployment, each module receives its own live URL, such as:
+
+- `main_server`: `https://kissan-main-production.up.railway.app`
+- `daily_updates`: (runs silently, no endpoint)
+- `agri-dash`: `https://kissan-dash-production.up.railway.app`
+
+---
+
+> Cloud deployment enabled real-time sensor ingestion, advisory generation, and user communication at scale, simulating a production-grade smart farming system for low-resource rural environments.
+
+---
+
